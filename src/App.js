@@ -14,7 +14,7 @@ import {
   CircularProgress
 } from "@material-ui/core";
 
-const styles = {
+const styles = theme => ({
   root: {
     marginTop: 20,
     marginBottom: 20,
@@ -25,7 +25,10 @@ const styles = {
     alignItems: "center"
   },
   paper: {
-    width: "70%",
+    width: 960,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    },
     height: "100%"
   },
   tableHeadRow: {
@@ -40,8 +43,22 @@ const styles = {
   },
   cardContent: {
     padding: 0
+  },
+  columns: {
+    event: {
+      width: "34%"
+    },
+    genre: {
+      width: "20%"
+    },
+    date: {
+      width: "20%"
+    },
+    location: {
+      width: "20%"
+    }
   }
-};
+});
 
 class App extends Component {
   state = {
@@ -111,10 +128,10 @@ class App extends Component {
             <Header />
             <Table>
               <colgroup>
-                <col style={{ width: "34%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "26%" }} />
+                <col className={classes.columns.event} />
+                <col className={classes.columns.genre} />
+                <col className={classes.columns.date} />
+                <col className={classes.columns.location} />
               </colgroup>
               <TableHead>
                 <TableRow classes={{ head: classes.tableHeadRow }}>
