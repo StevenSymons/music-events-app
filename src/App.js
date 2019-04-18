@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
-import Header from "./layouts/header";
-import CollapsedComponent from "./CollapsedComponent";
+import Header from "./Header";
 import Pagination from "./Pagination";
+import CollapsedComponent from "./CollapsedComponent";
+import { withStyles } from "@material-ui/core/styles";
 import {
   CssBaseline,
   Paper,
@@ -10,34 +11,35 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Collapse,
-  Typography,
-  CardMedia,
-  Card,
-  CardContent,
-  Button
+  CircularProgress
 } from "@material-ui/core";
 
 const styles = {
-  Root: {
+  root: {
+    marginTop: 20,
+    marginBottom: 20,
     width: "100%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
   },
-  Paper: {
+  paper: {
     width: 960,
     height: "100%"
   },
-  TableRow: {
-    cursor: "pointer"
+  tableHeadRow: {
+    backgroundColor: "#607d8b"
   },
-  CollapsedComponent: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingLeft: 35,
-    paddingRight: 35,
-    height: 200
+  tableCell: {
+    color: "#ffffff"
+  },
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {}
+  },
+  cardContent: {
+    padding: 0
   }
 };
 
@@ -65,14 +67,12 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const url = `https://app.ticketmaster.com/discovery/v2/events?apikey=HDm4kf9OkZvd3cMbYB5cOjGUsoPGR4fU&size=${
-      this.state.rowsPerPage
-    }&page=${this.state.page}&countryCode=BE`;
+    const { rowsPerPage, page } = this.state;
+    const url = `https://app.ticketmaster.com/discovery/v2/events?apikey=HDm4kf9OkZvd3cMbYB5cOjGUsoPGR4fU&size=${rowsPerPage}&page=${page}&countryCode=BE`;
 
     fetch(url)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({
           events: data._embedded.events,
           pageCount: data.page.totalElements,
@@ -90,7 +90,7 @@ class App extends Component {
       const { page, rowsPerPage } = this.state;
       const url = `https://app.ticketmaster.com/discovery/v2/events?apikey=HDm4kf9OkZvd3cMbYB5cOjGUsoPGR4fU&size=${rowsPerPage}&page=${page}&countryCode=BE`;
       fetch(url)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
           this.setState({
             events: data._embedded.events
@@ -102,104 +102,98 @@ class App extends Component {
 
   render() {
     const { events, isLoading, page, rowsPerPage, pageCount } = this.state;
+    const { classes } = this.props;
     return (
       <Fragment>
         <CssBaseline />
-        <div style={styles.Root}>
-          <Paper style={styles.Paper}>
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
             <Header />
             <Table>
               <colgroup>
                 <col style={{ width: "34%" }} />
-                <col style={{ width: "22%" }} />
-                <col style={{ width: "22%" }} />
-                <col style={{ width: "22%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "26%" }} />
               </colgroup>
               <TableHead>
-                <TableRow>
-                  <TableCell>Event</TableCell>
-                  <TableCell>Genre</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Location</TableCell>
+                <TableRow classes={{ head: classes.tableHeadRow }}>
+                  <TableCell
+                    classes={{ head: classes.tableCell }}
+                    variant="head"
+                  >
+                    Event
+                  </TableCell>
+                  <TableCell
+                    classes={{ head: classes.tableCell }}
+                    variant="head"
+                  >
+                    Genre
+                  </TableCell>
+                  <TableCell
+                    classes={{ head: classes.tableCell }}
+                    variant="head"
+                  >
+                    Date
+                  </TableCell>
+                  <TableCell
+                    classes={{ head: classes.tableCell }}
+                    variant="head"
+                  >
+                    Location
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell>Loading...</TableCell>
-                    <TableCell>Loading...</TableCell>
-                    <TableCell>Loading...</TableCell>
-                    <TableCell>Loading...</TableCell>
+                    <TableCell>
+                      <CircularProgress color="primary" />
+                    </TableCell>
+                    <TableCell>
+                      <CircularProgress color="primary" />
+                    </TableCell>
+                    <TableCell>
+                      <CircularProgress color="primary" />
+                    </TableCell>
+                    <TableCell>
+                      <CircularProgress color="primary" />
+                    </TableCell>
                   </TableRow>
                 ) : (
                   events.map(event => {
-                    const {
-                      id,
-                      name,
-                      classifications,
-                      dates,
-                      priceRanges
-                    } = event;
+                    // console.log(event);
+                    const { id, name, priceRanges, url } = event,
+                      genre = event.classifications[0].genre.name,
+                      date = event.dates.start.localDate,
+                      venue = event._embedded.venues[0].name,
+                      imageUrl = event.images[0].url;
                     return (
                       <Fragment key={id}>
                         <TableRow
                           hover={true}
-                          style={styles.TableRow}
+                          selected={this.state[id]}
+                          className={classes.tableRow}
+                          classes={{
+                            hover: classes.tableRow,
+                            selected: classes.tableRow
+                          }}
                           onClick={() => this.handleClick(event, id)}
                         >
                           <TableCell>{name}</TableCell>
-                          <TableCell>{classifications[0].genre.name}</TableCell>
-                          <TableCell>{dates.start.localDate}</TableCell>
-                          <TableCell>
-                            {event._embedded.venues[0].name}
-                          </TableCell>
+                          <TableCell>{genre}</TableCell>
+                          <TableCell>{date}</TableCell>
+                          <TableCell>{venue}</TableCell>
                         </TableRow>
-                        <Collapse
-                          in={this.state[id]}
-                          timeout={{ enter: 0, exit: 0 }}
-                          component={CollapsedComponent}
-                          unmountOnExit
-                        >
-                          <Card>
-                            <div>
-                              <CardContent
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row"
-                                }}
-                              >
-                                <div>
-                                  <CardMedia
-                                    style={{ height: 225, width: 305 }}
-                                    image={event.images[0].url}
-                                  />
-                                </div>
-                                <div>
-                                  <Typography>{name}</Typography>
-                                  <Typography>
-                                    {dates.start.localDate}
-                                  </Typography>
-                                  <Typography>
-                                    Price:{" "}
-                                    {priceRanges
-                                      ? priceRanges[0].max
-                                      : "No price available yet."}
-                                  </Typography>
-                                  <Typography>
-                                    Location: {event._embedded.venues[0].name}
-                                  </Typography>
-                                  <Button
-                                    href="http://www.google.com"
-                                    variant="contained"
-                                    color="primary"
-                                  >
-                                    Check it out!
-                                  </Button>
-                                </div>
-                              </CardContent>
-                            </div>
-                          </Card>
-                        </Collapse>
+                        <CollapsedComponent
+                          id={this.state[id]}
+                          imageUrl={imageUrl}
+                          name={name}
+                          date={date}
+                          priceRanges={priceRanges}
+                          venue={venue}
+                          url={url}
+                        />
                       </Fragment>
                     );
                   })
@@ -221,4 +215,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
