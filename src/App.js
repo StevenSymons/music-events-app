@@ -29,7 +29,15 @@ const styles = theme => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%"
     },
+    [theme.breakpoints.down("xs")]: {
+      width: 600
+    },
     height: "100%"
+  },
+  table: {
+    [theme.breakpoints.down("xs")]: {
+      width: 600
+    }
   },
   tableHeadRow: {
     backgroundColor: "#607d8b"
@@ -38,8 +46,7 @@ const styles = theme => ({
     color: "#ffffff"
   },
   tableRow: {
-    cursor: "pointer",
-    "&:hover": {}
+    cursor: "pointer"
   },
   cardContent: {
     padding: 0
@@ -126,7 +133,7 @@ class App extends Component {
         <div className={classes.root}>
           <Paper className={classes.paper}>
             <Header />
-            <Table>
+            <Table className={classes.table}>
               <colgroup>
                 <col className={classes.columns.event} />
                 <col className={classes.columns.genre} />

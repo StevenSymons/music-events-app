@@ -13,7 +13,7 @@ import {
   TableCell
 } from "@material-ui/core";
 
-const styles = {
+const styles = theme => ({
   button: {
     backgroundColor: "#3d5afe",
     "&:hover": {
@@ -29,13 +29,20 @@ const styles = {
     backgroundColor: "#8eacbb",
     display: "flex",
     alignItems: "center",
-    height: 250
+    height: 250,
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      width: 600
+    }
   },
   cardMedia: {
     height: 225,
     width: 305,
     marginLeft: 30,
-    borderRadius: 2
+    borderRadius: 2,
+    [theme.breakpoints.down("xs")]: {
+      width: 0
+    }
   },
   tableRow: {
     borderColor: "green"
@@ -50,7 +57,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   }
-};
+});
 
 const CollapsedComponent = ({
   id,
