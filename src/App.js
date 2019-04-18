@@ -25,7 +25,7 @@ const styles = {
     alignItems: "center"
   },
   paper: {
-    width: 960,
+    width: "70%",
     height: "100%"
   },
   tableHeadRow: {
@@ -162,7 +162,7 @@ class App extends Component {
                   </TableRow>
                 ) : (
                   events.map(event => {
-                    // console.log(event);
+                    console.log(event);
                     const { id, name, priceRanges, url } = event,
                       genre = event.classifications[0].genre.name,
                       date = event.dates.start.localDate,
