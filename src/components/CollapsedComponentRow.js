@@ -2,7 +2,12 @@ import React from "react";
 import { Fade } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-// What is this useless thing? It's the only thing that allows me to "expand" a table row.
+/*
+This is what allows me to "expand" a table row. 
+This has been separated into a component to prevent a standard 'div' 
+from wrapping the component instead of a tr. A div would break the collapsed element, 
+because divs are not allowed in a table.
+*/
 
 const styles = {
   td: {

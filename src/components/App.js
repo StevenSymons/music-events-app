@@ -40,6 +40,7 @@ const styles = theme => ({
   tableRow: {
     cursor: "pointer"
   },
+  // Removes the last column "location" from the table at "xs"
   disappear: {
     [theme.breakpoints.down("xs")]: {
       display: "none"
