@@ -53,6 +53,11 @@ const styles = theme => ({
     location: {
       width: "20%"
     }
+  },
+  disappear: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    }
   }
 });
 
@@ -127,7 +132,10 @@ class App extends Component {
                 <col className={classes.columns.event} />
                 <col className={classes.columns.genre} />
                 <col className={classes.columns.date} />
-                <col className={classes.columns.location} />
+                <col
+                  className={classes.columns.location}
+                  className={classes.disappear}
+                />
               </colgroup>
               <TableHead>
                 <TableRow classes={{ head: classes.tableHeadRow }}>
@@ -151,6 +159,7 @@ class App extends Component {
                   </TableCell>
                   <TableCell
                     classes={{ head: classes.tableCell }}
+                    className={classes.disappear}
                     variant="head"
                   >
                     Location
@@ -196,7 +205,9 @@ class App extends Component {
                           <TableCell>{name}</TableCell>
                           <TableCell>{genre}</TableCell>
                           <TableCell>{date}</TableCell>
-                          <TableCell>{venue}</TableCell>
+                          <TableCell className={classes.disappear}>
+                            {venue}
+                          </TableCell>
                         </TableRow>
                         <CollapsedComponent
                           id={this.state[id]}
