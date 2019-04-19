@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   appBar: {
+    width: "100%",
     backgroundColor: "#34515e",
     display: "flex",
     justifyContent: "center",

@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Button,
   Table,
   TableBody,
   TableRow,
@@ -14,13 +13,6 @@ import {
 } from "@material-ui/core";
 
 const styles = theme => ({
-  button: {
-    backgroundColor: "#3d5afe",
-    "&:hover": {
-      backgroundColor: "#0031ca"
-    },
-    marginLeft: 25
-  },
   label: {
     color: "#ffffff"
   },
@@ -29,33 +21,25 @@ const styles = theme => ({
     backgroundColor: "#8eacbb",
     display: "flex",
     alignItems: "center",
-    height: 250,
-    width: "100%",
-    [theme.breakpoints.down("xs")]: {
-      width: 600
-    }
+    height: 250
   },
   cardMedia: {
     height: 225,
     width: 305,
     marginLeft: 30,
-    borderRadius: 2,
     [theme.breakpoints.down("xs")]: {
       width: 0
     }
   },
-  tableRow: {
-    borderColor: "green"
+  table: {
+    height: 225,
+    width: 400,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
+    }
   },
   tableCell: {
-    paddingRight: 10,
     backgroundColor: "white"
-  },
-  cardContent: {
-    padding: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
   }
 });
 
@@ -79,7 +63,7 @@ const CollapsedComponent = ({
       <Card classes={{ root: classes.card }}>
         <CardMedia className={classes.cardMedia} image={imageUrl} />
         <CardContent style={{ padding: 0 }}>
-          <Table style={{ height: 225, width: 400 }}>
+          <Table classes={{ root: classes.table }}>
             <TableBody>
               <TableRow borderbottom={0} classes={{ root: classes.tableRow }}>
                 <TableCell classes={{ root: classes.tableCell }}>

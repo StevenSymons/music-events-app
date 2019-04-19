@@ -40,20 +40,6 @@ const styles = theme => ({
   tableRow: {
     cursor: "pointer"
   },
-  columns: {
-    event: {
-      width: "34%"
-    },
-    genre: {
-      width: "20%"
-    },
-    date: {
-      width: "20%"
-    },
-    location: {
-      width: "20%"
-    }
-  },
   disappear: {
     [theme.breakpoints.down("xs")]: {
       display: "none"
@@ -129,12 +115,10 @@ class App extends Component {
             <Header />
             <Table className={classes.table}>
               <colgroup>
-                <col className={classes.columns.event} />
-                <col className={classes.columns.genre} />
-                <col className={classes.columns.date} />
-                <col
-                  className={classes.columns.location}
-                  className={classes.disappear}
+                <col style={{ width: "34%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "26%" }} className={classes.disappear} />
                 />
               </colgroup>
               <TableHead>
