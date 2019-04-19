@@ -29,15 +29,7 @@ const styles = theme => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%"
     },
-    [theme.breakpoints.down("xs")]: {
-      width: 600
-    },
     height: "100%"
-  },
-  table: {
-    [theme.breakpoints.down("xs")]: {
-      width: 600
-    }
   },
   tableHeadRow: {
     backgroundColor: "#607d8b"
@@ -47,9 +39,6 @@ const styles = theme => ({
   },
   tableRow: {
     cursor: "pointer"
-  },
-  cardContent: {
-    padding: 0
   },
   columns: {
     event: {
