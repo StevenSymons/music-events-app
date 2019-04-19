@@ -26,10 +26,17 @@ const styles = theme => ({
   },
   paper: {
     width: 960,
-    overflowX: "auto",
-    height: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100%"
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: 600
+    },
+    height: "100%"
+  },
+  table: {
+    [theme.breakpoints.down("xs")]: {
+      width: 600
     }
   },
   tableHeadRow: {
@@ -41,10 +48,21 @@ const styles = theme => ({
   tableRow: {
     cursor: "pointer"
   },
-  // Removes the last column "location" from the table at "xs"
-  disappear: {
-    [theme.breakpoints.down("xs")]: {
-      display: "none"
+  cardContent: {
+    padding: 0
+  },
+  columns: {
+    event: {
+      width: "34%"
+    },
+    genre: {
+      width: "20%"
+    },
+    date: {
+      width: "20%"
+    },
+    location: {
+      width: "20%"
     }
   }
 });
@@ -58,7 +76,7 @@ class App extends Component {
     rowsPerPage: 10
   };
 
-  handleRowSelection = (event, id) => {
+  handleClick = (event, id) => {
     this.setState({ event, [id]: !this.state[id] });
   };
 
@@ -117,10 +135,10 @@ class App extends Component {
             <Header />
             <Table className={classes.table}>
               <colgroup>
-                <col style={{ width: "34%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "26%" }} className={classes.disappear} />
+                <col className={classes.columns.event} />
+                <col className={classes.columns.genre} />
+                <col className={classes.columns.date} />
+                <col className={classes.columns.location} />
               </colgroup>
               <TableHead>
                 <TableRow classes={{ head: classes.tableHeadRow }}>
@@ -184,7 +202,7 @@ class App extends Component {
                             hover: classes.tableRow,
                             selected: classes.tableRow
                           }}
-                          onClick={() => this.handleRowSelection(event, id)}
+                          onClick={() => this.handleClick(event, id)}
                         >
                           <TableCell>{name}</TableCell>
                           <TableCell>{genre}</TableCell>
